@@ -317,6 +317,7 @@ public class TimelineChart extends Chart // NOSONAR
             {
                 period = Period.ofYears(1);
                 format = DateTimeFormatter.ofPattern("yyyy"); //$NON-NLS-1$
+                
                 if (cursor.getMonthValue() > 1)
                     cursor = cursor.plusYears(1).withDayOfYear(1);
             }          
