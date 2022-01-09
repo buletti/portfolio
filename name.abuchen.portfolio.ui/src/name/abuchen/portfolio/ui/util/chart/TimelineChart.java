@@ -311,6 +311,7 @@ public class TimelineChart extends Chart // NOSONAR
             {
                 period = Period.ofMonths(3);
                 format = DateTimeFormatter.ofPattern("QQQ yyyy"); //$NON-NLS-1$
+                cursor = cursor.plusMonths((12 - cursor.getMonthValue() + 1) % 3);
             }
             else
             {
