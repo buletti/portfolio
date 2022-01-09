@@ -316,6 +316,8 @@ public class TimelineChart extends Chart // NOSONAR
             {
                 period = Period.ofYears(1);
                 format = DateTimeFormatter.ofPattern("yyyy"); //$NON-NLS-1$
+                if (cursor.getMonthValue() > 1)
+                    cursor = cursor.plusYears(1).withDayOfYear(1);
             }          
         }
 
@@ -325,7 +327,7 @@ public class TimelineChart extends Chart // NOSONAR
         int xMax = xAxis.getPixelCoordinate(xAxis.getRange().upper);
         while (cursor.isBefore(end))
         {
-            int x = xAxis.getPixelCoordinate((double) cursor.atStartOfDay(zoneId).toInstant().toEpochMilli());
+            int x = xAxis.getPixelCoordinate(cursor.atStartOfDay(zoneId).toInstant().toEpochMilli());
             e.gc.drawLine(x, 0, x, e.height);
             
             if (isLabelable(x, xMax, previousLabelExtend)) 
@@ -471,9 +473,7 @@ public class TimelineChart extends Chart // NOSONAR
         //  b2) there is sufficient space between the label of the previous line and this new line
         
         if (previousLabelExtend == -1) 
-        {
             return true;
-        }
         
         return currentX + MIN_LABEL_WIDTH <= xMax && currentX - previousLabelExtend >= 0;
     }
